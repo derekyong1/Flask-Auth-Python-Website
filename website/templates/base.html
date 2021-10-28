@@ -17,30 +17,30 @@
   </head>
   <body>
     <!-- Making a collapsible navbar -->
-    <div class = "collapse navbar-collpase" id="navbar">
+
+    <nav class="navbar bg-dark navbar-dark">
+      <!-- Toggler/collapsibe Button -->
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#collapsibleNavbar"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <!-- Navbar links -->
+      <div class="collapse navbar-collapse" id="collapsibleNavbar">
         <div class="navbar-nav">
-            <a class="nav-item nav-link" id="login" href="/login">Log In</a>\
-            <a class="nav-item nav-link" id="sign-up" href="/signup">Sign up</a>
-            <a class="nav-item nav-link" id="logout" href="/logout">Log Out</a>
-            <a class="nav-item nav-link" id="home" href="/">Home</a>
+          <a class="nav-item nav-link" id="login" href="/login">Log In</a>
+          <a class="nav-item nav-link" id="sign-up" href="/signup">Sign up</a>
+          <a class="nav-item nav-link" id="logout" href="/logout">Log Out</a>
+          <a class="nav-item nav-link" id="home" href="/">Home</a>
         </div>
-    </div>
-
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <div class="container-fluid">
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbar"
-        >
-          <!-- icon -->
-          <span class="navbar-toggler-icon"></span>
-        </button>
       </div>
-
-
     </nav>
+
+    <div class="container">{% block content %} {% endblock %}</div>
 
     <!-- JavaScript Bundle with Popper -->
     <script
