@@ -1,7 +1,7 @@
 from flask import Flask
 import os
 from os import path
-
+from flask_login import LoginManager, login_manager
 from flask_sqlalchemy import SQLAlchemy
 from dotenv import find_dotenv, load_dotenv
 
@@ -22,6 +22,15 @@ def create_app():
 
     # Taking the database and telling the app that we are using this database
     db.init_app(app)
+
+    # Defining a login manager for the app
+    login_manager = LoginManager()
+    login_manager.login_view = 'auth.login'
+    login_manager.init_app(app)
+
+    @login_manager.user_loader
+    def load_user(id):
+        return Person.query.get(int(id))
 
     from .views import views
     from .auth import auth
