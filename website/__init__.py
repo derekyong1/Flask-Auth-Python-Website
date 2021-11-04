@@ -1,9 +1,10 @@
 from flask import Flask
 import os
 from os import path
-from flask_login import LoginManager, login_manager
+from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
 from dotenv import find_dotenv, load_dotenv
+
 
 
 load_dotenv(find_dotenv())
@@ -18,19 +19,12 @@ def create_app():
     app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 
     # Setting SQLAchemy database location 
-    app.config['SQLACHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}'
+    app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}'
+
+    app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
     # Taking the database and telling the app that we are using this database
     db.init_app(app)
-
-    # Defining a login manager for the app
-    login_manager = LoginManager()
-    login_manager.login_view = 'auth.login'
-    login_manager.init_app(app)
-
-    @login_manager.user_loader
-    def load_user(id):
-        return Person.query.get(int(id))
 
     from .views import views
     from .auth import auth
@@ -42,6 +36,15 @@ def create_app():
     from .models import Person, Note
 
     create_database(app)
+
+    # Defining a login manager for the app
+    login_manager = LoginManager()
+    login_manager.login_view = 'auth.login'
+    login_manager.init_app(app)
+
+    @login_manager.user_loader
+    def load_user(id):
+        return Person.query.get(int(id))
     
     return app
 
